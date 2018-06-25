@@ -20,6 +20,7 @@ func main() {
 		if bn != blockNumber() {
 			bn = blockNumber()
 			fmt.Println(bn)
+			updateEurPrice()
 		}
 		time.Sleep(1 * time.Second)
 	}
