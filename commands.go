@@ -28,7 +28,8 @@ func updateEurPrice(counter *int) {
 	eurPrice := int64(math.Pow(10, 18) / ep.EUR)
 
 	if eurPrice != s.EurPrice {
-		if *counter == 100 || float64(eurPrice)/float64(s.EurPrice) >= 1.01 || float64(eurPrice)/float64(s.EurPrice) <= 0.99 {
+		priceRatio := float64(eurPrice) / float64(s.EurPrice)
+		if *counter == 100 || priceRatio >= 1.01 || priceRatio <= 0.99 {
 			ctr.UpdateCurrencyPrice(auth, add, big.NewInt(eurPrice))
 			log.Printf("Updated: %d %f", eurPrice, float64(eurPrice)/float64(s.EurPrice))
 			s.EurPrice = eurPrice
