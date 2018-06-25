@@ -4,7 +4,6 @@ import (
 	"log"
 	"math"
 	"math/big"
-	"strconv"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -15,16 +14,18 @@ const key = "{\"address\":\"c910f4f3b67799ef20774b05691ebffe23da5ee5\",\"crypto\
 
 func updateEurPrice() {
 	ep, _ := priceCheckRequest()
-	log.Println("EUR: " + strconv.Itoa(int(math.Pow(10, 18)/ep.EUR)))
-	log.Println("HRK: " + strconv.Itoa(int(math.Pow(10, 18)/ep.HRK)))
 	add := common.HexToAddress("0x712c8029CBdFa2E45E6d13f0ae753071BE59daa2")
-	// add.SetString()
 
-	auth, err := bind.NewTransactor(strings.NewReader(key), "phixe9Eami")
+	auth, err := bind.NewTransactor(strings.NewReader(key), conf.Password)
 	if err != nil {
 		log.Fatalf("could not create auth: %v", err)
 	}
 
-	ctr.UpdateCurrencyPrice(auth, add, big.NewInt(int64(math.Pow(10, 18)/ep.EUR)))
-	// log.Println(add.String())
+	eurPrice := int64(math.Pow(10, 18) / ep.EUR)
+
+	if eurPrice != s.EurPrice {
+		ctr.UpdateCurrencyPrice(auth, add, big.NewInt(eurPrice))
+		s.EurPrice = eurPrice
+		log.Printf("Updated: %d", eurPrice)
+	}
 }

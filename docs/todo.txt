@@ -1,9 +1,12 @@
 TODO
 
+ - move json key to file
  - refactor code
+
  - hrk price
  - usd price
 
 DONE
 
  * prepare contract
+ * move password to config

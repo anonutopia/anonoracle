@@ -10,6 +10,7 @@ type config struct {
 	Geth            string `json:"geth"`
 	ContractAddress string `json:"contract_address"`
 	EthNetwork      uint   `json:"eth_network"`
+	Password        string `json:"password"`
 }
 
 func (sc *config) Load(configFile string) error {
