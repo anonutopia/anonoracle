@@ -8,8 +8,6 @@ var conf *config
 
 var ctr *Token
 
-var bn int64 = 0
-
 var s *Storage
 
 func main() {
@@ -20,8 +18,8 @@ func main() {
 	s = initStorage()
 
 	for {
-		if bn != blockNumber() {
-			bn = blockNumber()
+		if s.BlockNumber != blockNumber() {
+			s.BlockNumber = blockNumber()
 			updateEurPrice()
 		}
 		time.Sleep(1 * time.Second)
