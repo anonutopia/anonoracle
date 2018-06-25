@@ -11,7 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func updateEurPrice() {
+func updateEurPrice(counter *int) {
 	ep, _ := priceCheckRequest()
 	add := common.HexToAddress("0x712c8029CBdFa2E45E6d13f0ae753071BE59daa2")
 
@@ -28,8 +28,11 @@ func updateEurPrice() {
 	eurPrice := int64(math.Pow(10, 18) / ep.EUR)
 
 	if eurPrice != s.EurPrice {
-		ctr.UpdateCurrencyPrice(auth, add, big.NewInt(eurPrice))
-		s.EurPrice = eurPrice
-		log.Printf("Updated: %d", eurPrice)
+		if *counter == 100 || float64(eurPrice)/float64(s.EurPrice) >= 1.01 || float64(eurPrice)/float64(s.EurPrice) <= 0.99 {
+			ctr.UpdateCurrencyPrice(auth, add, big.NewInt(eurPrice))
+			log.Printf("Updated: %d %f", eurPrice, float64(eurPrice)/float64(s.EurPrice))
+			s.EurPrice = eurPrice
+			*counter = 0
+		}
 	}
 }

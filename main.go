@@ -17,10 +17,13 @@ func main() {
 
 	s = initStorage()
 
+	counter := 0
+
 	for {
 		if s.BlockNumber != blockNumber() {
+			counter++
 			s.BlockNumber = blockNumber()
-			updateEurPrice()
+			updateEurPrice(&counter)
 		}
 		time.Sleep(1 * time.Second)
 	}
