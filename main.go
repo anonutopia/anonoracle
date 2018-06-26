@@ -20,11 +20,13 @@ func main() {
 	counter := 0
 
 	for {
-		if s.BlockNumber != blockNumber() {
+		bn, err := blockNumber()
+		if err == nil && s.BlockNumber != bn {
 			counter++
-			s.BlockNumber = blockNumber()
+			s.BlockNumber = bn
 			updateEurPrice(&counter)
 		}
+		// log.Printf("Tick: %d", bn)
 		time.Sleep(1 * time.Second)
 	}
 }

@@ -11,6 +11,7 @@ type config struct {
 	ContractAddress string `json:"contract_address"`
 	EthNetwork      uint   `json:"eth_network"`
 	Password        string `json:"password"`
+	EurAddress      string `json:"eur_address"`
 }
 
 func (sc *config) Load(configFile string) error {

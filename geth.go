@@ -28,11 +28,12 @@ func initGeth() *Token {
 	return token
 }
 
-func blockNumber() int64 {
+func blockNumber() (int64, error) {
 	header, err := conn.HeaderByNumber(context.Background(), nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("[blockNumber] err: %s", err)
+		return 0, err
 	}
 
-	return header.Number.Int64()
+	return header.Number.Int64(), nil
 }
